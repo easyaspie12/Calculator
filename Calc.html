@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script type = "text/javascript">
+
+		var queue1 = [];
+		function beginning() {
+			var value = "; " + document.cookie;
+			var parts = value.split("; " + 'key' + "=");
+			var old;
+			var neww;
+			if (parts.length == 2) old = parts.pop().split(";").shift();
+			var neww = old.split(',');
+			queue1 = neww;
+			return neww;
+		}
+		window.onload = function()
+		{
+			update('Calculations', beginning());
+		};
+        function choose(value)
+        {
+            if (queue1.length >= 10)
+            {
+                queue1.shift();
+                queue1.push(value);
+            }
+            else
+            {
+                queue1.push(value);
+            }
+			document.cookie = 'key=' + queue1;
+        }
+        function update(table, data) 
+        {
+			var rows = '';
+            for(var i = 0;i < data.length;i++)
+            {
+                rows += ("<tr>" + "<td>" + data[i] + "</td>" + "</tr>");
+            }
+            $('#' + table).html(rows);
+        }
+        </script>
+	</head>
+	<body>
+<form name = "Calculator">
+<table border = 10>
+<tr>
+<td>
+<input type ="text" name = "input" size = "28">
+<br>
+<input type = "button" value = "1" onclick = "Calculator.input.value += '1'">
+<input type = "button" value = "2" onclick = "Calculator.input.value += '2'">
+<input type = "button" value = "3" onclick = "Calculator.input.value += '3'">
+<input type = "button" value = "+" onclick = "Calculator.input.value += '+'">
+<input type = "button" value = "exp" onclick = "Calculator.input.value += '**'">
+<br>
+<input type = "button" value = "4" onclick = "Calculator.input.value += '4'">
+<input type = "button" value = "5" onclick = "Calculator.input.value += '5'">
+<input type = "button" value = "6" onclick = "Calculator.input.value += '6'">
+<input type = "button" value = "-" onclick = "Calculator.input.value += '-'">
+<input type = "button" value = "sqrt" onclick = "Calculator.input.value += 'math.sqrt'">
+<br>
+<input type = "button" value = "7" onclick = "Calculator.input.value += '7'">
+<input type = "button" value = "8" onclick = "Calculator.input.value += '8'">
+<input type = "button" value = "9" onclick = "Calculator.input.value += '9'">
+<input type = "button" value = "*" onclick = "Calculator.input.value += '*'">
+<input type = "button" value = "(" onclick = "Calculator.input.value += '('">
+<input type = "button" value = ")" onclick = "Calculator.input.value += ')'">
+<br>
+<input type = "button" value = "clear" onclick = "Calculator.input.value = ''">
+<input type = "button" value = "0" onclick = "Calculator.input.value += '0'">
+<input type = "button" value = "=" onclick =
+"choose(Calculator.input.value + '=' + eval(Math.round(eval(Calculator.input.value) * 1e12) / 1e12));
+Calculator.input.value = eval(Math.round(eval(Calculator.input.value) * 1e12)/1e12);
+update('Calculations', queue1)">
+<input type = "button" value = "/" onclick = "Calculator.input.value += '/'">
+<input type = "button" value = "." onclick = "Calculator.input.value += '.'">
+</td>
+</tr>
+</table>
+<table id = "Calculations">
+    <tr><td>Calculations</td></tr>
+</table>
+</form>	
+	</body>
+</html>
